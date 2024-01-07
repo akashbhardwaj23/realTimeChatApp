@@ -1,0 +1,8 @@
+.chatContainer {
+    grid-template-columns: 1fr 4fr;
+    gap: 20px;
+}
+
+.scroll::-webkit-scrollbar {
+    display: none;
+}
