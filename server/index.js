@@ -11,7 +11,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173"
+        origin: "http://localhost:5173",
     }
 });
 
@@ -20,7 +20,7 @@ const PORT = 3000;
 
 let roomName = ''
 
-let users = []
+let users = [];
 
 
 // const setUser = (userId, userName) => {
@@ -29,27 +29,31 @@ let users = []
 
 
 
-function leaveRoom ({id, users}) {
-    
-    let newUsers = users.filter((user) => user.id !== id);
-    return newUsers;
+function leaveRoom({id, users}) {
+   console.log(users)
+    users = users.filter((user) => user.id !== id);
+    return users;
 }
 
 io.on("connection", (socket) => {
     console.log(`A user is connected ${socket.id} `)
+    console.log("Called socket")
+    console.log(users)
 
     socket.on('join_room', (data) => {
         const {username, roomId} = data;
         socket.join(roomId);
+        console.log("Called times")
+        
         roomName = roomId;
 
         console.log(`User is Joined ${username} ${roomId
         }`)
-
+       
 
         let createTime = Date.now()
 
-        console.log('this is user', createTime)
+        console.log('this is time', createTime)
 
         console.log('This is roomId', roomId)
 
@@ -63,7 +67,7 @@ io.on("connection", (socket) => {
             createTime: createTime
         })
 
-        
+        console.log(socket.id)
         users.push({id:socket.id, username})
 
        let chatRoomUser = users.filter((user) => user.roomId === roomId)
@@ -87,10 +91,16 @@ io.on("connection", (socket) => {
     socket.on('leave_room', (data) => {
         const {username, roomId} = data;
 
-        socket.leave(roomId)
+        socket.leave(roomId);
+        console.log("adois", username)
         const createTime = Date.now();
 
+
+        // Doing the removal with username not with userid
+
         // Remove User From our array also;
+
+        console.log(socket.id)
         users =  leaveRoom({id:socket.id, users});
         socket.to(roomId).emit("chatUsers", users)
 
@@ -103,13 +113,13 @@ io.on("connection", (socket) => {
 
         console.log(`User Has Left ${username}`)
 
+        console.log(users)
+
     })
 
 
    
 })
-
-
 
 
 server.listen(PORT, () => {
