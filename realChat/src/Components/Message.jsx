@@ -99,7 +99,8 @@ function Message({ socket, setThemeMode, themeMode }) {
         <div
           className={"rounded-md mb-6 max-w-[600px] p-3 bg-[#FFFBEB] shadow-lg"}
           key={index}
-        >
+        >   
+           
           <div className="flex justify-between">
             <span className={"text-green-600 text-xl"}>{msg.username}</span>
             <span className={"text-[#71717A] text-sm font-medium"}>

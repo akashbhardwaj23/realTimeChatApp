@@ -40,8 +40,8 @@ function RoomUsers({socket, username, roomId, setUsers}) {
       <h2 className={'mb-[60px] uppercase text-[2rem] text-purple-800 text-center'}>{roomId}</h2>
 
       <div>
-        {roomUsers.length > 0 && <h5 className={'text-xl text-white'}>Users:</h5>}
-        <ul className={'list-none pl-0 mb-[60px] text-[#000000]'}>
+        {roomUsers.length > 0 && <h5 className={'text-xl text-white mb-1 uppercase'}>Users:</h5>}
+        <ul className={'list-none pl-0 mb-[60px] text-[#171717]'}>
           {roomUsers.map((user) => (
             <li
             className='mb-3'
