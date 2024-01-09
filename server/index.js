@@ -84,8 +84,9 @@ io.on("connection", (socket) => {
         console.log(data)
         const {message, username, roomId, createTime} = data;
         // socket.in(roomId).emit("receive_message", data)
+        // socket.to(socket.id).emit("receive_message", data)
         // Do this afterwards
-        io.in(roomId).emit('receive_message', data)
+        io.in(roomId).emit('receive_message', data);
     })
 
     socket.on('leave_room', (data) => {

@@ -21,8 +21,11 @@ function Message({ socket, setThemeMode, themeMode }) {
           createTime: data.createTime,
         },
       ]);
+      
       // setSenderOrReceiver(data.senderOrReceiver)
     });
+
+   
 
     return () => socket.off("recieve_message");
   }, [socket]);
@@ -32,7 +35,24 @@ function Message({ socket, setThemeMode, themeMode }) {
     return date.toLocaleTimeString();
   };
 
-  if (!message) return <h1>Loding.............</h1>;
+  useEffect(() => {
+    const message1 = JSON.parse(localStorage.getItem("message"));
+    if(message1 && message1.length > 0){
+      setMessage(message1)
+    }
+    console.log(message1);
+   
+  },[])
+
+  useEffect(() => {
+    console.log("saving to local storage")
+    localStorage.setItem("message", JSON.stringify(message));
+    console.log(message)
+  },[message])
+
+ 
+
+  if(!message) return <h1>No message</h1>
 
   return (
     <div className={"h-[85vh] overflow-auto py-[10px]  pl-10 pr-[10px] scroll"}>
@@ -99,30 +119,3 @@ function Message({ socket, setThemeMode, themeMode }) {
 }
 
 export default Message;
-
-// .chatContainer {
-//     max-width: 1100px;
-//     margin: 0 auto;
-//     display: grid;
-//     grid-template-columns: 1fr 4fr;
-//     gap: 20px;
-//   }
-
-//
-
-//   /* Messages */
-//
-//
-
-//   /* Message input and button */
-//   .sendMessageContainer {
-//     padding: 16px 20px 20px 16px;
-//   }
-//   .messageInput {
-//     padding: 14px;
-//     margin-right: 16px;
-//     width: 60%;
-//     border-radius: 6px;
-//     border: 1px solid rgb(153, 217, 234);
-//     font-size: 0.9rem;
-//   }

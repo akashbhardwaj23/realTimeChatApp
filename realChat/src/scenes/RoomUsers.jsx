@@ -14,6 +14,8 @@ function RoomUsers({socket, username, roomId, setUsers}) {
             console.log(data)
             setRoomUsers(data)
             setUsers(data);
+            console.log("saving user to local storage")
+            localStorage.setItem('users', JSON.stringify(data))
         })
 
 
@@ -26,6 +28,7 @@ function RoomUsers({socket, username, roomId, setUsers}) {
     const leaveRoom = () => {
         const createTime = Date.now()
         socket.emit('leave_room', {username, roomId, createTime})
+        localStorage.removeItem('message')
         navigate('/')
     }
 
@@ -63,28 +66,3 @@ function RoomUsers({socket, username, roomId, setUsers}) {
 
 
 export default RoomUsers
-
-
- /* Room and users component */
-//   .roomAndUsersColumn {
-//     border-right: 1px solid #dfdfdf;
-//   }
-//   .roomTitle {
-//     margin-bottom: 60px;
-//     text-transform: uppercase;
-//     font-size: 2rem;
-//     color: #fff;
-//   }
-//   .usersTitle {
-//     font-size: 1.2rem;
-//     color: #fff;
-//   }
-//   .usersList {
-//     list-style-type: none;
-//     padding-left: 0;
-//     margin-bottom: 60px;
-//     color: rgb(153, 217, 234);
-//   }
-//   .usersList li {
-//     margin-bottom: 12px;
-//   }

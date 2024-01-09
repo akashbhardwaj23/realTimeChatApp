@@ -7,6 +7,10 @@ import { io } from "socket.io-client";
 
 function App() {
   const [socket, setSocket] = useState(null);
+  if (socket === null) {
+    setSocket(io.connect("http://localhost:3000"));
+  }
+
 
   const [username, setUsername] = useState(null);
   const [roomId, setRoomId] = useState(null);
@@ -14,9 +18,6 @@ function App() {
   const [themeMode, setThemeMode] = useState("light");
 
   useEffect(() => {
-    if (socket === null) {
-      setSocket(io.connect("http://localhost:3000"));
-    }
 
     if (socket) {
       socket.on("connect", () => {
