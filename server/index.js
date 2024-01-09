@@ -68,7 +68,7 @@ io.on("connection", (socket) => {
         })
 
         console.log(socket.id)
-        users.push({id:socket.id, username})
+        users.push({id:socket.id,roomId, username})
 
        let chatRoomUser = users.filter((user) => user.roomId === roomId)
 
