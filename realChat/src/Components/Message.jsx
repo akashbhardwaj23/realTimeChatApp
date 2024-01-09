@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
 
-function Message({ socket }) {
+function Message({ socket, setThemeMode, themeMode }) {
   const [message, setMessage] = useState([]);
   const [senderOrReceiver, setSenderOrReceiver] = useState("receiver");
-  const [islight, setIsLight] = useState(true);
+  
 
   // const messageColumnRef = useRef(null)
 
@@ -21,8 +21,11 @@ function Message({ socket }) {
           createTime: data.createTime,
         },
       ]);
+      
       // setSenderOrReceiver(data.senderOrReceiver)
     });
+
+   
 
     return () => socket.off("recieve_message");
   }, [socket]);
@@ -32,12 +35,30 @@ function Message({ socket }) {
     return date.toLocaleTimeString();
   };
 
-  if (!message) return <h1>Loding.............</h1>;
+  useEffect(() => {
+    const message1 = JSON.parse(localStorage.getItem("message"));
+    if(message1 && message1.length > 0){
+      setMessage(message1)
+    }
+    console.log(message1);
+   
+  },[])
+
+  useEffect(() => {
+    console.log("saving to local storage")
+    localStorage.setItem("message", JSON.stringify(message));
+    console.log(message)
+  },[message])
+
+ 
+
+  if(!message) return <h1>No message</h1>
 
   return (
     <div className={"h-[85vh] overflow-auto py-[10px]  pl-10 pr-[10px] scroll"}>
-      {islight ? (
+      {themeMode === 'light' ? (
         <div className="flex justify-end pr-6 p-4 mr-4 w-1/4 absolute right-0">
+           {console.log(themeMode)}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -45,7 +66,7 @@ function Message({ socket }) {
             strokeWidth="1.5"
             stroke="currentColor"
             className="w-8 h-8"
-            onClick={() => setIsLight(!islight)}
+            onClick={() => setThemeMode('dark')}
           >
             <path
               strokeLinecap="round"
@@ -56,6 +77,7 @@ function Message({ socket }) {
         </div>
       ) : (
         <div className="flex justify-end pr-6 p-4 mr-4  w-1/4 absolute right-0">
+          {console.log(themeMode)}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -63,7 +85,7 @@ function Message({ socket }) {
             strokeWidth="1.5"
             stroke="currentColor"
             className="w-8 h-8"
-            onClick={() => setIsLight(!islight)}
+            onClick={() => setThemeMode('light')}
           >
             <path
               strokeLinecap="round"
@@ -97,30 +119,3 @@ function Message({ socket }) {
 }
 
 export default Message;
-
-// .chatContainer {
-//     max-width: 1100px;
-//     margin: 0 auto;
-//     display: grid;
-//     grid-template-columns: 1fr 4fr;
-//     gap: 20px;
-//   }
-
-//
-
-//   /* Messages */
-//
-//
-
-//   /* Message input and button */
-//   .sendMessageContainer {
-//     padding: 16px 20px 20px 16px;
-//   }
-//   .messageInput {
-//     padding: 14px;
-//     margin-right: 16px;
-//     width: 60%;
-//     border-radius: 6px;
-//     border: 1px solid rgb(153, 217, 234);
-//     font-size: 0.9rem;
-//   }
