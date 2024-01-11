@@ -27,6 +27,8 @@ function RoomJoinPage({socket, username, setUsername, roomId, setRoomId}) {
         console.log({username, roomId})
 
         if(username === null || roomId === null) return alert('Please enter username and roomId');
+        localStorage.setItem('username', JSON.stringify(username))
+        localStorage.setItem('roomId', JSON.stringify(roomId))
         socket.emit('join_room', {username, roomId})    
 
         navigate('/chat')

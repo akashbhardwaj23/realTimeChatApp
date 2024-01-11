@@ -117,7 +117,20 @@ io.on("connection", (socket) => {
         console.log(users)
 
     })
+    socket.on('disconnect', () => {
+        console.log('user got Disconnected', socket.id)
 
+        const user = users.find((user) => user.id=== socket.id)
+
+        if(user?.username){
+            users = leaveRoom({id:user.id, users})
+            socket.to(roomName).emit('chatUsers', users)
+            socket.in(roomName).emit('receive_message', {
+                message:   `User has left ${user.username}`,
+                createTime: Date.now()
+            })
+        }
+    })
 
    
 })

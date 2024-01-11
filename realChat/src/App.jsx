@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import RoomJoinPage from "./scenes/RoomJoinPage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Chat from "./scenes/Chat";
 
 import { io } from "socket.io-client";
@@ -11,20 +16,43 @@ function App() {
     setSocket(io.connect("http://localhost:3000"));
   }
 
-
   const [username, setUsername] = useState(null);
   const [roomId, setRoomId] = useState(null);
   const [users, setUsers] = useState([]);
   const [themeMode, setThemeMode] = useState("light");
 
   useEffect(() => {
-
     if (socket) {
       socket.on("connect", () => {
         console.log("connected");
       });
     }
+
+      socket.on('disconnect', () => {
+      console.log('user disconnected')
+    })
   }, []);
+
+  useEffect(() => {
+
+    console.log('useEffect is called in username1 and roomId1')
+   const username1 = JSON.parse(localStorage.getItem('username'));
+    const roomId1 = JSON.parse(localStorage.getItem('roomId'));
+
+    console.log(socket)
+
+    if(!username && !roomId){
+      if(username1 && roomId1){
+        setRoomId(roomId1);
+        setUsername(username1)
+
+        socket.on('join_room', {
+          username1,
+          roomId1
+        })
+      }
+    }
+  },[])
 
   // actual change in theme
 
@@ -53,15 +81,19 @@ function App() {
           <Route
             path="/chat"
             element={
-              <Chat
-                socket={socket}
-                username={username}
-                roomId={roomId}
-                setUsers={setUsers}
-                users={users}
-                setThemeMode={setThemeMode}
-                themeMode={themeMode}
-              />
+              // !username && !roomId ? (
+              //   // <Navigate to={"/"} />
+              // ) : (
+                <Chat
+                  socket={socket}
+                  username={username}
+                  roomId={roomId}
+                  setUsers={setUsers}
+                  users={users}
+                  setThemeMode={setThemeMode}
+                  themeMode={themeMode}
+                />
+              // )
             }
           />
         </Routes>
