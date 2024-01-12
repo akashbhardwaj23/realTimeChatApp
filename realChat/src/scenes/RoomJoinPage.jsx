@@ -8,12 +8,8 @@ import {useNavigate} from 'react-router-dom'
 
 
 function RoomJoinPage({socket, username, setUsername, roomId, setRoomId}) {
-  
 
    const navigate = useNavigate()
-
-   
-
 
     const showMessage = () => {
         socket.on('recieve_message', ({message}) => {
@@ -21,11 +17,7 @@ function RoomJoinPage({socket, username, setUsername, roomId, setRoomId}) {
         })
     }
 
-
-
     const joinRoom = () => {
-        console.log({username, roomId})
-
         if(username === null || roomId === null) return alert('Please enter username and roomId');
         localStorage.setItem('username', JSON.stringify(username))
         localStorage.setItem('roomId', JSON.stringify(roomId))

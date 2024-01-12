@@ -13,7 +13,7 @@ import { io } from "socket.io-client";
 function App() {
   const [socket, setSocket] = useState(null);
   if (socket === null) {
-    setSocket(io.connect("http://localhost:3000"));
+    setSocket(io.connect("http://URL:3000"));
   }
 
   const [username, setUsername] = useState(null);
@@ -28,7 +28,7 @@ function App() {
       });
     }
 
-      socket.on('disconnect', () => {
+    socket.on('disconnect', () => {
       console.log('user disconnected')
     })
   }, []);
@@ -36,13 +36,13 @@ function App() {
   useEffect(() => {
 
     console.log('useEffect is called in username1 and roomId1')
-   const username1 = JSON.parse(localStorage.getItem('username'));
+    const username1 = JSON.parse(localStorage.getItem('username'));
     const roomId1 = JSON.parse(localStorage.getItem('roomId'));
 
     console.log(socket)
 
-    if(!username && !roomId){
-      if(username1 && roomId1){
+    if (!username && !roomId) {
+      if (username1 && roomId1) {
         setRoomId(roomId1);
         setUsername(username1)
 
@@ -52,7 +52,7 @@ function App() {
         })
       }
     }
-  },[])
+  }, [])
 
   // actual change in theme
 
@@ -81,9 +81,9 @@ function App() {
           <Route
             path="/chat"
             element={
-              // !username && !roomId ? (
-              //   // <Navigate to={"/"} />
-              // ) : (
+              !username && !roomId ? (
+                <Navigate to={"/"} />
+              ) : (
                 <Chat
                   socket={socket}
                   username={username}
@@ -93,7 +93,7 @@ function App() {
                   setThemeMode={setThemeMode}
                   themeMode={themeMode}
                 />
-              // )
+              )
             }
           />
         </Routes>
