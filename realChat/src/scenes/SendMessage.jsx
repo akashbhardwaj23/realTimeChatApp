@@ -20,7 +20,7 @@ function SendMessage({socket, username, roomId, users}) {
     <div className={'pt-3 pr-4 pb-4 pl-3'}>
 
       <input
-        className={'p-4 mr-4 w-2/3 rounded-md border-solid border border-[#99d9ea] focus:border-3 outline-[#CA8A04] outline-2 outline-solid placeholder:text-gray-700'}                                                    
+        className={'p-4 mr-4 md:w-2/3 w-1/2 rounded-md border-solid border mb-2 border-[#99d9ea] focus:border-3 outline-[#CA8A04] outline-2 outline-solid placeholder:text-gray-700'}                                                    
         placeholder='Message...'
         onChange={(e) => setMessage(e.target.value)}
         value={message}
