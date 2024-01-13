@@ -1,28 +1,39 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
+import { setMessage } from '../store/chatSlice.js'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Message({ socket, setThemeMode, themeMode }) {
-  const [message, setMessage] = useState([]);
+  // const [message, setMessage] = useState([]);
   const [senderOrReceiver, setSenderOrReceiver] = useState("receiver");
-  
+  const dispatch = useDispatch();
+  const message = useSelector((state) => state.messages);
+  console.log(message)
 
   // const messageColumnRef = useRef(null)
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
       console.log(data);
-      setMessage((state) => [
-        ...state,
-        {
-          message: data.message,
-          username: data.username,
-          roomId: data.roomId,
-          senderOrReceiver: data.senderOrReceiver,
-          createTime: data.createTime,
-        },
-      ]);
+      dispatch(setMessage(data))
+      // setMessage((state) => [
+      //   ...state,
+      //   {
+      //     message: data.message,
+      //     username: data.username,
+      //     roomId: data.roomId,
+      //     senderOrReceiver: data.senderOrReceiver,
+      //     createTime: data.createTime,
+      //   },
+      // ]);
       
       // setSenderOrReceiver(data.senderOrReceiver)
+
+      
+
+
+
+
     });
 
    

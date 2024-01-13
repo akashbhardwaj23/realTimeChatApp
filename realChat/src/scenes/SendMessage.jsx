@@ -15,6 +15,12 @@ function SendMessage({socket, username, roomId, users}) {
        setMessage('')
     }
 
+    const handleKeyPress = (e) => {
+        if(e.key === 'Enter'){
+            sendMessage();
+        }
+    }
+
 
   return (
     <div className={'pt-3 pr-4 pb-4 pl-3'}>
@@ -24,8 +30,9 @@ function SendMessage({socket, username, roomId, users}) {
         placeholder='Message...'
         onChange={(e) => setMessage(e.target.value)}
         value={message}
+        onKeyUp={handleKeyPress}
       />
-      <button className='bg-green-600 p-4 rounded-md shadow-lg text-white text-md uppercase' onClick={sendMessage}>
+      <button className='bg-green-600 p-4 rounded-md shadow-lg text-white text-md uppercase' onClick={sendMessage} >
         Send Message
       </button>
 

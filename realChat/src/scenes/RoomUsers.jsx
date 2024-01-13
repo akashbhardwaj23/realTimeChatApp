@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 
 function RoomUsers({socket, username, roomId, setUsers}) {
 
-
     const [roomUsers, setRoomUsers] = useState([])
 
     const navigate = useNavigate();
