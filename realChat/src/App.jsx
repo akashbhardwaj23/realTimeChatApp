@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import RoomJoinPage from "./scenes/RoomJoinPage";
+import { useSelector } from "react-redux";
 import {
   BrowserRouter,
   Routes,
@@ -16,8 +17,12 @@ function App() {
     setSocket(io.connect("http://localhost:3000"));
   }
 
-  const [username, setUsername] = useState(null);
-  const [roomId, setRoomId] = useState(null);
+  // const [username, setUsername] = useState(null);
+
+  
+  // const [roomId, setRoomId] = useState(null);
+  const username = useSelector(state => state.userName);
+  const roomId = useSelector(state => state.roomId)
   const [users, setUsers] = useState([]);
   const [themeMode, setThemeMode] = useState("light");
 
@@ -33,26 +38,26 @@ function App() {
     })
   }, []);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    console.log('useEffect is called in username1 and roomId1')
-    const username1 = JSON.parse(localStorage.getItem('username'));
-    const roomId1 = JSON.parse(localStorage.getItem('roomId'));
+  //   console.log('useEffect is called in username1 and roomId1')
+  //   const username1 = JSON.parse(localStorage.getItem('username'));
+  //   const roomId1 = JSON.parse(localStorage.getItem('roomId'));
 
-    console.log(socket)
+  //   console.log(socket)
 
-    if (!username && !roomId) {
-      if (username1 && roomId1) {
-        setRoomId(roomId1);
-        setUsername(username1)
+  //   if (!username && !roomId) {
+  //     if (username1 && roomId1) {
+  //       setRoomId(roomId1);
+  //       setUsername(username1)
 
-        socket.on('join_room', {
-          username1,
-          roomId1
-        })
-      }
-    }
-  }, [])
+  //       socket.on('join_room', {
+  //         username1,
+  //         roomId1
+  //       })
+  //     }
+  //   }
+  // }, [])
 
   // actual change in theme
 
@@ -70,10 +75,6 @@ function App() {
             element={
               <RoomJoinPage
                 socket={socket}
-                username={username}
-                setUsername={setUsername}
-                roomId={roomId}
-                setRoomId={setRoomId}
               />
             }
           />
@@ -86,8 +87,6 @@ function App() {
               ) : (
                 <Chat
                   socket={socket}
-                  username={username}
-                  roomId={roomId}
                   setUsers={setUsers}
                   users={users}
                   setThemeMode={setThemeMode}

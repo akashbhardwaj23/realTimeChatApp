@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     mode: 'light',
     roomUsers: null,
-    user: null,
+    userName: null,
     roomId: '',
     token: null,
     messages:[],
@@ -34,14 +34,17 @@ const chatSlice = createSlice(
 
                 state.messages.push(newMessage)
             },
-            setRoomId : (state, action) => {
+            setRoomID : (state, action) => {
                 state.roomId = action.payload.roomId;
+            },
+            setUserName : (state, action) => {
+                state.userName = action.payload.userName;
             }
         }
     }
 );
 
 
-export const { setLogin, setLogout, setMode, setMessage, setRoomId  } = chatSlice.actions;
+export const { setLogin, setLogout, setMode, setMessage, setRoomID, setUserName  } = chatSlice.actions;
 
 export default chatSlice.reducer;

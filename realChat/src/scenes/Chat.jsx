@@ -3,8 +3,11 @@ import Message from '../Components/Message'
 import '../App.css'
 import RoomUsers from './RoomUsers'
 import SendMessage from './SendMessage'
+import { useSelector } from 'react-redux'
 
-function Chat({socket, username, roomId, setUsers, users, setThemeMode, themeMode}) {
+function Chat({socket, setUsers, users, setThemeMode, themeMode}) {
+  const username = useSelector(state => state.userName)
+  const roomId = useSelector(state => state.roomId)
   return (
     <div className='max-w-full my-0  grid chatContainer'>
       <RoomUsers socket={socket} username={username} roomId={roomId} setUsers={setUsers} />

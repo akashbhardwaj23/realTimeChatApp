@@ -1,16 +1,12 @@
 import React, { useState } from 'react'
 
-function SendMessage({socket, username, roomId, users}) {
+function SendMessage({socket, username, roomId}) {
     const [message, setMessage] = useState('');
-   
-
 
     const sendMessage = () => {
-        let senderOrReceiver = 'sender';
        let createTime = Date.now();
        if(!message) return window.alert('Please enter message')
-       
-       
+
        socket.emit('sendMessage', {message, username, roomId, createTime})
        setMessage('')
     }
@@ -20,7 +16,6 @@ function SendMessage({socket, username, roomId, users}) {
             sendMessage();
         }
     }
-
 
   return (
     <div className={'pt-3 pr-4 pb-4 pl-3'}>
