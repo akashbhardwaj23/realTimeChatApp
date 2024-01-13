@@ -14,7 +14,7 @@ import { io } from "socket.io-client";
 function App() {
   const [socket, setSocket] = useState(null);
   if (socket === null) {
-    setSocket(io.connect("http://localhost:3000"));
+    setSocket(io.connect("http://URL:3000"));
   }
 
   // const [username, setUsername] = useState(null);
