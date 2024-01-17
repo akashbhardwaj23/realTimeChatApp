@@ -36,7 +36,7 @@ function RoomUsers({socket, username, roomId, setUsers}) {
 
 
   return (
-    <div className={'md:block hidden border-r-2 border-solid border-[#dfdfdf] min-h-screen h-full bg-[#06B6D4] px-4 '}>
+    <div className={'md:block hidden border-r-2 border-solid border-[#dfdfdf] min-h-screen h-full bg-[#06B6D4] px-4 dark:bg-[#FB923C]'}>
         <h1 className='mb-1 text-[3rem] uppercase text-white font-semibold'>ROOM</h1>
       <h2 className={'mb-[60px] uppercase text-[2rem] text-purple-800 text-center'}>{roomId}</h2>
 

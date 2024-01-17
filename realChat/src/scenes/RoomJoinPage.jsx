@@ -35,8 +35,8 @@ function RoomJoinPage({ socket }) {
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#F9ED32] to-[#FBB040] flex flex-col justify-center items-center relative top-[20%] w-1/2 left-[25%] p-8 rounded-md shadow-xl">
-      <h1 className="p-4 text-[#1D4ED8] md:text-5xl font-bold uppercase mb-2 text-4xl">
+    <div className="bg-gradient-to-br from-[#F9ED32] to-[#FBB040] flex flex-col justify-center items-center relative top-[20%] w-1/2 left-[25%] p-8 rounded-md shadow-xl dark:bg-gradient-to-br dark:from-green-400 dark:to-green-200">
+      <h1 className="p-4 text-[#1D4ED8] md:text-5xl font-bold uppercase mb-2 text-4xl dark:text-white">
         Rooms
       </h1>
 
@@ -44,7 +44,7 @@ function RoomJoinPage({ socket }) {
         type={"text"}
         name={"username"}
         className={
-          "p-4 lg:w-1/2 w-full rounded-md border-2 border-blue-300 focus:outline focus:outline-2 focus:outline-blue-500 placeholder:text-slate-300 placeholder:text-xl placeholder:font-medium "
+          "p-4 lg:w-1/2 w-full rounded-md border-2 border-blue-300 focus:outline focus:outline-2 focus:outline-blue-500 placeholder:text-slate-300 placeholder:text-xl placeholder:font-medium dark:focus:outline-white dark:placeholder-white"
         }
         placeholder={"UserName"}
         setUsername={setUsername}
@@ -54,7 +54,7 @@ function RoomJoinPage({ socket }) {
         type={"text"}
         name={"roomId"}
         className={
-          "p-4 lg:w-1/2 w-full rounded-md border-2 border-blue-300 focus:outline focus:outline-2 focus:outline-blue-500 placeholder:text-slate-300 placeholder:text-xl placeholder:font-medium "
+          "p-4 lg:w-1/2 w-full rounded-md border-2 border-blue-300 focus:outline focus:outline-2 focus:outline-blue-500 placeholder:text-slate-300 placeholder:text-xl placeholder:font-medium dark:focus:outline-white dark:placeholder-white"
         }
         placeholder={"RoomId"}
         setRoomId={setRoomId}

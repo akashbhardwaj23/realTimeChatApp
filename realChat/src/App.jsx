@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import RoomJoinPage from "./scenes/RoomJoinPage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter,
   Routes,
@@ -14,17 +14,15 @@ import { io } from "socket.io-client";
 function App() {
   const [socket, setSocket] = useState(null);
   if (socket === null) {
-    setSocket(io.connect("http://URL:3000"));
+    setSocket(io.connect("http://localhost:3000"));
   }
 
   // const [username, setUsername] = useState(null);
-
-  
   // const [roomId, setRoomId] = useState(null);
   const username = useSelector(state => state.userName);
   const roomId = useSelector(state => state.roomId)
   const [users, setUsers] = useState([]);
-  const [themeMode, setThemeMode] = useState("light");
+  const themeMode = useSelector(state => state.mode)
 
   useEffect(() => {
     if (socket) {
@@ -39,7 +37,6 @@ function App() {
   }, []);
 
   // useEffect(() => {
-
   //   console.log('useEffect is called in username1 and roomId1')
   //   const username1 = JSON.parse(localStorage.getItem('username'));
   //   const roomId1 = JSON.parse(localStorage.getItem('roomId'));
@@ -67,7 +64,7 @@ function App() {
   }, [themeMode]);
 
   return (
-    <div className="w-full min-h-full h-screen bg-gradient-to-r from-[#06B6D4] to-[#A5F3FC]">
+    <div className="w-full min-h-full h-screen bg-gradient-to-r from-[#06B6D4] to-[#A5F3FC] dark:bg-gradient-to-r dark:from-[#60A5FA] dark:to-[#BFDBFE]">
       <BrowserRouter>
         <Routes>
           <Route
@@ -89,8 +86,6 @@ function App() {
                   socket={socket}
                   setUsers={setUsers}
                   users={users}
-                  setThemeMode={setThemeMode}
-                  themeMode={themeMode}
                 />
               )
             }

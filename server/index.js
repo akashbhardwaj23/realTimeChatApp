@@ -11,7 +11,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "YOUR URL",
+    origin: "http://localhost:5174",
   },
 });
 

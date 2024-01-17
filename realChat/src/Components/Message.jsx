@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 import { setMessage } from '../store/chatSlice.js'
 import { useDispatch, useSelector } from 'react-redux'
+import { setMode } from '../store/chatSlice.js'
 
-function Message({ socket, setThemeMode, themeMode }) {
+function Message({ socket }) {
   // const [message, setMessage] = useState([]);
   const [senderOrReceiver, setSenderOrReceiver] = useState("receiver");
   const dispatch = useDispatch();
   const message = useSelector((state) => state.messages);
-  console.log(message)
+  console.log(message);
+
+  const themeMode = useSelector(state => state.mode);
 
   // const messageColumnRef = useRef(null)
 
@@ -28,11 +31,6 @@ function Message({ socket, setThemeMode, themeMode }) {
       // ]);
       
       // setSenderOrReceiver(data.senderOrReceiver)
-
-      
-
-
-
 
     });
 
@@ -77,7 +75,7 @@ function Message({ socket, setThemeMode, themeMode }) {
             strokeWidth="1.5"
             stroke="currentColor"
             className="w-8 h-8"
-            onClick={() => setThemeMode('dark')}
+            onClick={() => dispatch(setMode('dark'))}
           >
             <path
               strokeLinecap="round"
@@ -96,7 +94,7 @@ function Message({ socket, setThemeMode, themeMode }) {
             strokeWidth="1.5"
             stroke="currentColor"
             className="w-8 h-8"
-            onClick={() => setThemeMode('light')}
+            onClick={() => dispatch(setMode('light'))}
           >
             <path
               strokeLinecap="round"
