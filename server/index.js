@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 import express from "express";
 import { createServer } from "http";
+import dotenv from "dotenv"
 import leaveRoom from "./utils/leaveRoom.js";
 
 // import leaveRoom from './utils/leaveRoom';
@@ -8,6 +9,8 @@ import leaveRoom from "./utils/leaveRoom.js";
 const app = express();
 
 const server = createServer(app);
+
+dotenv.config();
 
 const io = new Server(server, {
   cors: {
@@ -20,6 +23,9 @@ const PORT = 3000;
 let roomName = "";
 
 let users = [];
+
+
+app.use("/", AnyRoute);
 
 
 

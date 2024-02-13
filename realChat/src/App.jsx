@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RoomJoinPage from "./scenes/RoomJoinPage";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Chat from "./scenes/Chat";
 
 import { io } from "socket.io-client";
@@ -19,10 +14,10 @@ function App() {
 
   // const [username, setUsername] = useState(null);
   // const [roomId, setRoomId] = useState(null);
-  const username = useSelector(state => state.userName);
-  const roomId = useSelector(state => state.roomId)
+  const username = useSelector((state) => state.userName);
+  const roomId = useSelector((state) => state.roomId);
   const [users, setUsers] = useState([]);
-  const themeMode = useSelector(state => state.mode)
+  const themeMode = useSelector((state) => state.mode);
 
   useEffect(() => {
     if (socket) {
@@ -31,9 +26,9 @@ function App() {
       });
     }
 
-    socket.on('disconnect', () => {
-      console.log('user disconnected')
-    })
+    socket.on("disconnect", () => {
+      console.log("user disconnected");
+    });
   }, []);
 
   // useEffect(() => {
@@ -64,17 +59,9 @@ function App() {
   }, [themeMode]);
 
   return (
-    <div className="w-full min-h-full h-screen bg-gradient-to-r from-[#06B6D4] to-[#A5F3FC] dark:bg-gradient-to-r dark:from-[#60A5FA] dark:to-[#BFDBFE]">
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <RoomJoinPage
-                socket={socket}
-              />
-            }
-          />
+          <Route path="/" element={<RoomJoinPage socket={socket} />} />
 
           <Route
             path="/chat"
@@ -82,17 +69,12 @@ function App() {
               !username && !roomId ? (
                 <Navigate to={"/"} />
               ) : (
-                <Chat
-                  socket={socket}
-                  setUsers={setUsers}
-                  users={users}
-                />
+                <Chat socket={socket} setUsers={setUsers} users={users} />
               )
             }
           />
         </Routes>
       </BrowserRouter>
-    </div>
   );
 }
 
