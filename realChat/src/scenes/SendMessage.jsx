@@ -6,7 +6,6 @@ function SendMessage({socket, username, roomId}) {
     const sendMessage = () => {
        let createTime = Date.now();
        if(!message) return window.alert('Please enter message')
-
        socket.emit('sendMessage', {message, username, roomId, createTime})
        setMessage('')
     }

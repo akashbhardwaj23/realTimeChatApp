@@ -44,14 +44,14 @@ function Message({ socket }) {
     return date.toLocaleTimeString();
   };
 
-  useEffect(() => {
-    const message1 = JSON.parse(localStorage.getItem("message"));
-    if(message1 && message1.length > 0){
-      setMessage(message1)
-    }
-    console.log(message1);
+  // useEffect(() => {
+  //   const message1 = JSON.parse(localStorage.getItem("message"));
+  //   if(message1 && message1.length > 0){
+  //     setMessage(message1)
+  //   }
+  //   console.log(message1);
    
-  },[])
+  // },[])
 
   useEffect(() => {
     console.log("saving to local storage")

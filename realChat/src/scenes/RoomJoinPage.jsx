@@ -18,7 +18,9 @@ function RoomJoinPage({ socket }) {
   };
 
   const joinRoom = () => {
+    console.log("Here i am reaching")
     if (username && roomId) {
+      console.log("Inside username and password")
       dispatch(setUserName({ userName: username }));
       dispatch(setRoomID({ roomId: roomId }));
     }
@@ -28,12 +30,11 @@ function RoomJoinPage({ socket }) {
     // localStorage.setItem("username", JSON.stringify(username));
     // localStorage.setItem("roomId", JSON.stringify(roomId));
     socket.emit("join_room", { username, roomId });
-
     navigate("/chat");
   };
 
   return (
-    <div className="w-full min-h-full h-screen bg-gradient-to-r from-[#06B6D4] to-[#A5F3FC] dark:bg-gradient-to-r dark:from-[#60A5FA] dark:to-[#BFDBFE]">
+    <div className="w-full min-h-full h-screen  bg-gradient-to-r from-[#06B6D4] to-[#A5F3FC] dark:bg-gradient-to-r dark:from-[#60A5FA] dark:to-[#BFDBFE]">
       <div className="bg-gradient-to-br from-[#F9ED32] to-[#FBB040] flex flex-col justify-center items-center relative top-[20%] w-1/2 left-[25%] p-8 rounded-md shadow-xl dark:bg-gradient-to-br dark:from-green-400 dark:to-green-200">
         <h1 className="p-4 text-[#1D4ED8] md:text-5xl font-bold uppercase mb-2 text-4xl dark:text-white">
           Rooms

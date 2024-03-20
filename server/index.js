@@ -14,7 +14,7 @@ dotenv.config();
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5174",
+    origin: "http://localhost:5173",
   },
 });
 
@@ -25,7 +25,7 @@ let roomName = "";
 let users = [];
 
 
-app.use("/", AnyRoute);
+// app.use("/", AnyRoute);
 
 
 

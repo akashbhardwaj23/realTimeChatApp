@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 
 function Chat({socket, setUsers, users}) {
   const username = useSelector(state => state.userName)
+  console.log(username) 
   const roomId = useSelector(state => state.roomId)
   return (
     <div className='max-w-full my-0  grid chatContainer'>

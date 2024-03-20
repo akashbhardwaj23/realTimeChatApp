@@ -19,6 +19,8 @@ function App() {
   const [users, setUsers] = useState([]);
   const themeMode = useSelector((state) => state.mode);
 
+  console.log(username, roomId);
+
   useEffect(() => {
     if (socket) {
       socket.on("connect", () => {
@@ -62,13 +64,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<RoomJoinPage socket={socket} />} />
-
+          {console.log(username, roomId)}
           <Route
             path="/chat"
             element={
-              !username && !roomId ? (
-                <Navigate to={"/"} />
-              ) : (
+             (
                 <Chat socket={socket} setUsers={setUsers} users={users} />
               )
             }

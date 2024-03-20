@@ -35,9 +35,11 @@ const chatSlice = createSlice(
                 state.messages.push(newMessage)
             },
             setRoomID : (state, action) => {
+                console.log(action.payload)
                 state.roomId = action.payload.roomId;
             },
             setUserName : (state, action) => {
+                console.log(action.payload)
                 state.userName = action.payload.userName;
             }
         }
