@@ -1,0 +1,15 @@
+.chatContainer {
+    grid-template-columns: 1fr 4fr;
+    gap: 20px;
+}
+
+@media screen and (max-width: 767px) {
+    .chatContainer {
+        grid-template-columns: 3fr 1fr;
+        gap: 10px;
+    }
+}
+
+.scroll::-webkit-scrollbar {
+    display: none;
+}
