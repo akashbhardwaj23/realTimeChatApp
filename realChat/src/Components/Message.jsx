@@ -106,9 +106,10 @@ function Message({ socket }) {
       {message.map((msg, index) => {
         if (msg.senderOrReceiver) {
           return (
-            <div
+           <div className="w-2/3 flex justify-end h-auto">
+               <div
               className={
-                "rounded-md mb-6 max-w-[600px] p-3 bg-[#FFFBEB] shadow-lg"
+                "rounded-md mb-6 max-w-[600px] p-3 bg-[#FFFBEB] shadow-lg w-[55%] "
               }
               key={index}
             >
@@ -119,19 +120,21 @@ function Message({ socket }) {
                 </span>
               </div>
               {senderOrReceiver === "receiver" ? (
-                <p className={"text-[#44403C] text-md"}>{msg.message}</p>
+                <p className={"text-[#44403C] text-md text-wrap w-full"}>{msg.message}</p>
               ) : (
-                <p className="text-black text-md">{msg.message}</p>
+                <p className="text-black text-md text-wrap w-full h-auto">{msg.message}</p>
               )}
               <br />
             </div>
+           </div>
           );
         }
 
         return (
-          <div
+         <div className="w-2/3">
+           <div
             className={
-              "rounded-md mb-6 max-w-[600px] p-3 bg-green-500 shadow-lg"
+              "rounded-md mb-6 max-w-[600px] p-3 bg-green-500 shadow-lg w-[55%] flex flex-col justify-end"
             }
             key={index}
           >
@@ -148,6 +151,7 @@ function Message({ socket }) {
             )}
             <br />
           </div>
+         </div>
         );
       })}
     </div>
