@@ -9,7 +9,7 @@ function Chat({socket, setUsers, users}) {
   const username = useSelector(state => state.userName)
   const roomId = useSelector(state => state.roomId)
   return (
-    <div className='max-w-full my-0  grid chatContainer'>
+    <div className='max-w-full my-0 grid chatContainer'>
       <RoomUsers socket={socket} username={username} roomId={roomId} setUsers={setUsers} />
         <div>
             <Message socket = {socket}  />

@@ -121,7 +121,7 @@ function Message({ socket }) {
          <div className="w-2/3">
            <div
             className={
-              "rounded-md mb-6 max-w-[600px] p-3 bg-green-500 shadow-lg w-[55%] flex flex-col justify-end"
+              "rounded-lg mb-6 max-w-[600px] p-3 bg-[#009EFF] shadow-lg w-[55%] flex flex-col justify-end"
             }
             key={index}
           >
