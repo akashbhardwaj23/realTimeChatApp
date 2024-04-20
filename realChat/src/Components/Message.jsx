@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode } from "../store/chatSlice.js";
 
 function Message({ socket }) {
-  // const [message, setMessage] = useState([]);
   const [senderOrReceiver, setSenderOrReceiver] = useState("sender");
   const dispatch = useDispatch();
   const message = useSelector((state) => state.messages);
@@ -19,18 +18,6 @@ function Message({ socket }) {
     socket.on("receive_message", (data) => {
       console.log(data);
       dispatch(setMessage(data));
-      // setMessage((state) => [
-      //   ...state,
-      //   {
-      //     message: data.message,
-      //     username: data.username,
-      //     roomId: data.roomId,
-      //     senderOrReceiver: data.senderOrReceiver,
-      //     createTime: data.createTime,
-      //   },
-      // ]);
-
-      // setSenderOrReceiver(data.senderOrReceiver)
     });
 
     return () => socket.off("recieve_message");

@@ -64,7 +64,7 @@ function App() {
   }, [themeMode]);
 
   return (
-    <div className="w-full min-h-full h-screen bg-gradient-to-r from-[#06B6D4] to-[#A5F3FC] dark:bg-gradient-to-r dark:from-[#60A5FA] dark:to-[#BFDBFE]">
+    <div className="w-full min-h-full h-screen bg-white dark:from-[#60A5FA] dark:to-[#BFDBFE]">
       <BrowserRouter>
         <Routes>
           <Route
