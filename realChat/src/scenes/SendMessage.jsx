@@ -1,14 +1,22 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { setMessages } from '../store/chatSlice';
 
 function SendMessage({socket, username, roomId}) {
     const [message, setMessage] = useState('');
 
+    const dispatch = useDispatch()
+
     const sendMessage = () => {
        let createTime = Date.now();
        if(!message) return window.alert('Please enter message')
+       const data = {message, username, roomId, createTime , senderOrReceiver : true};
 
-       socket.emit('sendMessage', {message, username, roomId, createTime , senderOrReceiver : true})
-       setMessage('')
+       socket.emit('sendMessage', data);
+
+        dispatch(setMessages(data))
+
+       setMessage('');
     }
 
     const handleKeyPress = (e) => {

@@ -1,26 +1,37 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../App.css";
-import { setMessage } from "../store/chatSlice.js";
+import { setMessages } from "../store/chatSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode } from "../store/chatSlice.js";
 
 function Message({ socket }) {
   const [senderOrReceiver, setSenderOrReceiver] = useState("sender");
+  
   const dispatch = useDispatch();
   const message = useSelector((state) => state.messages);
   console.log(message);
 
   const themeMode = useSelector((state) => state.mode);
 
-  // const messageColumnRef = useRef(null)
+  const messageColumnRef = useRef(null)
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
       console.log(data);
-      dispatch(setMessage(data));
+
+      if(!data.senderOrReceiver){
+        dispatch(setMessages(data));
+      }
+      
     });
 
-    return () => socket.off("recieve_message");
+    socket.on("event:my_message", (data) => {
+      console.log(data);
+        dispatch(setMessages(data));
+    });
+
+
+    return () => socket.removeAllListeners("receive_message", "event:my_message");
   }, [socket]);
 
   const formatTime = (createTime) => {
@@ -35,13 +46,17 @@ function Message({ socket }) {
     }
     const message1 = JSON.parse(localStorage.getItem("message"));
     if (message1 && message1.length > 0) {
-      setMessage(message1);
+      setMessages(message1);
     }
     console.log(message1);
   }, []);
 
   useEffect(() => {
     console.log("saving to local storage");
+
+    if(messageColumnRef.current) {
+      messageColumnRef.current.scrollIntoView({behavior: "smooth"})
+    }
 
     localStorage.setItem("message", JSON.stringify(message));
     console.log(message);
@@ -96,7 +111,7 @@ function Message({ socket }) {
            <div className="w-2/3 flex justify-end h-auto">
                <div
               className={
-                "rounded-md mb-6 max-w-[600px] p-3 bg-[#FFFBEB] shadow-lg w-[55%] "
+                "rounded-md mb-6 max-w-[600px] p-3 bg-[#FFFBEB w-[55%] shadow-lg "
               }
               key={index}
             >
@@ -141,6 +156,7 @@ function Message({ socket }) {
          </div>
         );
       })}
+      <div ref={messageColumnRef}></div>
     </div>
   );
 }

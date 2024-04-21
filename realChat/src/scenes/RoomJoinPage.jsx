@@ -2,30 +2,27 @@ import React, { useState } from "react";
 import Input from "../Components/Input";
 import Button from "../Components/Button";
 import { useDispatch } from "react-redux";
-import { setUserName, setRoomID } from "../store/chatSlice.js";
+import { setUserName, setRoomID, setSocket } from "../store/chatSlice.js";
 import { useNavigate } from "react-router-dom";
 
-function RoomJoinPage({ socket }) {
+function RoomJoinPage({socket}) {
   const navigate = useNavigate();
   const [username, setUsername] = useState(null);
   const [roomId, setRoomId] = useState(null);
   const [errored, setErrored] = useState(false);
-
   const dispatch = useDispatch();
   
-
-  const showMessage = () => {
-    socket.on("recieve_message", ({ message }) => {
-      console.log(message);
-    });
-  };
+  // const showMessage = () => {
+  //   socket.on("recieve_message", ({ message }) => {
+  //     console.log(message);
+  //   });
+  // };
 
   const joinRoom = async() => {
-
     if(username && roomId){
       dispatch(setUserName({userName: username}));
       dispatch(setRoomID({roomId:roomId}))
-    }
+    };
 
     if (username === null || roomId === null){
       setErrored(true)
@@ -37,7 +34,6 @@ function RoomJoinPage({ socket }) {
 
       return alert("hi there");
     }
-    socket.emit("join_room", { username, roomId });
 
     navigate("/chat");
   };
@@ -52,7 +48,7 @@ function RoomJoinPage({ socket }) {
         type={"text"}
         name={"username"}
         className={
-          "p-4 pb-2 lg:w-1/2 w-full bg-[#005FFF] text-lg font-semibold border-b outline-none border-[#D9D9D9]  placeholder:text-white placeholder:text-lg placeholder:font-semibold dark:focus:outline-white dark:placeholder-white"
+          "p-4 pb-2 lg:w-1/2 w-full bg-[#005FFF] text-lg font-semibold border-b outline-none border-gray-100 active::border-[#D9D9D9]  placeholder:text-white placeholder:text-lg placeholder:font-semibold dark:focus:outline-white dark:placeholder-white"
         }
         placeholder={"UserName"}
         setUsername={setUsername}
@@ -62,7 +58,7 @@ function RoomJoinPage({ socket }) {
         type={"text"}
         name={"roomId"}
         className={
-          "p-4 pb-2 lg:w-1/2 w-full bg-[#005FFF] text-lg font-semibold border-b border-[#D9D9D9] outline-none placeholder:text-white placeholder:text-lg placeholder:font-semibold dark:focus:outline-white dark:placeholder-white"
+          "p-4 pb-2 lg:w-1/2 w-full bg-[#005FFF] text-lg font-semibold border-b border-gray-100 active:border-[#D9D9D9] outline-none placeholder:text-white placeholder:text-lg placeholder:font-semibold dark:focus:outline-white dark:placeholder-white"
         }
         placeholder={"RoomId"}
         setRoomId={setRoomId}
@@ -70,7 +66,7 @@ function RoomJoinPage({ socket }) {
 
       <Button text="Join Room" onClick={joinRoom} error={errored} />
 
-      <Button text="see Message" onClick={showMessage} />
+      {/* <Button text="see Message" onClick={showMessage} /> */}
     </div>
   );
 }

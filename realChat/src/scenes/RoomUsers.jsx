@@ -21,9 +21,7 @@ function RoomUsers({ socket, username, roomId, setUsers }) {
   const leaveRoom = () => {
     const createTime = Date.now();
     socket.emit("leave_room", { username, roomId, createTime });
-    localStorage.removeItem("message");
-    localStorage.removeItem("username");
-    localStorage.removeItem("roomId");
+    localStorage.clear();
     navigate("/");
   };
 

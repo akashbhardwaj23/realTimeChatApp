@@ -21,7 +21,7 @@ let roomName = "";
 
 let users = [];
 
-
+const userToSocketMapping = new Map();
 
 io.on("connection", (socket) => {
   console.log(`A user is connected ${socket.id} `);
@@ -30,6 +30,17 @@ io.on("connection", (socket) => {
     const { username, roomId } = data;
     socket.join(roomId);
 
+    const isUserPresent = userToSocketMapping.get(username)
+
+    console.log(userToSocketMapping)
+    
+    if(isUserPresent){
+      return socket.emit("event:user_present", {
+        userisPresent : true
+      })
+    }
+
+    userToSocketMapping.set(username, socket.id)
     roomName = roomId;
 
     console.log(`User is Joined ${username} ${roomId}`);
@@ -59,12 +70,11 @@ io.on("connection", (socket) => {
       console.log(data);
       let { message, username, roomId, createTime, senderOrReceiver } = data;
      
-      console.log(socket.id)
+      console.log("Message is sent by ",socket.id, " Username", username)
       
       io.to(socket.id).emit("receive_message", {message, username, roomId, createTime, senderOrReceiver})
       senderOrReceiver = false
 
-      console.lo
       socket.in(roomId).emit("receive_message", {message, username, roomId, createTime, senderOrReceiver})
       // Do this afterwards
 
@@ -83,8 +93,10 @@ io.on("connection", (socket) => {
 
       // Remove User From our array also;
 
-      console.log(socket.id);
+      console.log("Removed user ",socket.id);
       users = leaveRoom({ id: socket.id, users });
+
+      userToSocketMapping.delete(username)
       socket.to(roomId).emit("chatUsers", users);
 
       socket.to(roomId).emit("receive_message", {
@@ -94,21 +106,22 @@ io.on("connection", (socket) => {
         createTime: createTime,
       });
 
-      console.log(`User Has Left ${username}`);
+      console.log(users)
+      console.log(`User Has Left ${username} with socket id ${socket.id}`);
 
     });
   });
 
   socket.on("disconnect", () => {
-    console.log("user got Disconnected", socket.id);
-
     const user = users.find((user) => user.id === socket.id);
+
+    console.log("user got Disconnected with socket id ", socket.id, " and username ", user?.username);
 
     if (user?.username) {
       users = leaveRoom({ id: user.id, users });
       socket.to(roomName).emit("chatUsers", users);
       socket.in(roomName).emit("receive_message", {
-        message: `User has left ${user.username}`,
+        message: `User has left ${user.username} with socket id ${socket.id}`,
         createTime: Date.now(),
       });
     }

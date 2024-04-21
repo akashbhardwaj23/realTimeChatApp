@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import RoomJoinPage from "./scenes/RoomJoinPage";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   BrowserRouter,
   Routes,
@@ -8,55 +8,17 @@ import {
   Navigate,
 } from "react-router-dom";
 import Chat from "./scenes/Chat";
+import { useSocket } from "./hooks";
 
-import { io } from "socket.io-client";
 
 function App() {
-  const [socket, setSocket] = useState(null);
-  if (socket === null) {
-    setSocket(io.connect("http://localhost:3000"));
-  }
-
-  // const [username, setUsername] = useState(null);
-  // const [roomId, setRoomId] = useState(null);
   const username = useSelector(state => state.userName);
   const roomId = useSelector(state => state.roomId)
   const [users, setUsers] = useState([]);
-  const themeMode = useSelector(state => state.mode)
+  const themeMode = useSelector(state => state.mode);
 
-  useEffect(() => {
-    if (socket) {
-      socket.on("connect", () => {
-        console.log("connected");
-      });
-    }
+  const {socket} = useSocket();
 
-    socket.on('disconnect', () => {
-      console.log('user disconnected')
-    })
-  }, []);
-
-  // useEffect(() => {
-  //   console.log('useEffect is called in username1 and roomId1')
-  //   const username1 = JSON.parse(localStorage.getItem('username'));
-  //   const roomId1 = JSON.parse(localStorage.getItem('roomId'));
-
-  //   console.log(socket)
-
-  //   if (!username && !roomId) {
-  //     if (username1 && roomId1) {
-  //       setRoomId(roomId1);
-  //       setUsername(username1)
-
-  //       socket.on('join_room', {
-  //         username1,
-  //         roomId1
-  //       })
-  //     }
-  //   }
-  // }, [])
-
-  // actual change in theme
 
   useEffect(() => {
     document.querySelector("html").classList.remove("light", "dark");
@@ -71,7 +33,7 @@ function App() {
             path="/"
             element={
               <RoomJoinPage
-                socket={socket}
+                socket = {socket}
               />
             }
           />

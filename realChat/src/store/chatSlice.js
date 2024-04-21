@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-
 const initialState = {
     mode: 'light',
     roomUsers: null,
     userName: null,
     roomId: '',
+    socket : null,
     token: null,
     messages:[],
 }
@@ -28,7 +28,10 @@ const chatSlice = createSlice(
                 state.token = null;
                 state.messages = []
             },
-            setMessage: (state, action) => {
+            setSocket : (state, action) => {
+                state.socket = action.payload.socket
+            },
+            setMessages: (state, action) => {
                 let newMessage = action.payload;
                 console.log(action.payload)
 
@@ -45,6 +48,6 @@ const chatSlice = createSlice(
 );
 
 
-export const { setLogin, setLogout, setMode, setMessage, setRoomID, setUserName  } = chatSlice.actions;
+export const { setLogin, setLogout, setMode, setMessages, setSocket, setRoomID, setUserName  } = chatSlice.actions;
 
 export default chatSlice.reducer;
