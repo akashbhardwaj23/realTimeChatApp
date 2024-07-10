@@ -119,6 +119,7 @@ io.on("connection", (socket) => {
 
     if (user?.username) {
       users = leaveRoom({ id: user.id, users });
+      userToSocketMapping.delete(user.username)
       socket.to(roomName).emit("chatUsers", users);
       socket.in(roomName).emit("receive_message", {
         message: `User has left ${user.username} with socket id ${socket.id}`,
